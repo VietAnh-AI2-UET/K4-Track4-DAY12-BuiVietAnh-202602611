@@ -25,12 +25,18 @@
 ## Câu 1 · Dữ liệu
 Bước 0 bạn phát hiện những vấn đề gì ở dữ liệu? Vì sao không dùng cột `Acc_LV`, và bạn thay bằng gì? Bao nhiêu quỹ đạo bị loại vì trùng, và vì sao chia theo quỹ đạo?
 
-(trả lời ở đây)
+- Dữ liệu có quỹ đạo trùng hoàn toàn và cột `Acc_LV` không khớp với gia tốc suy ra từ vận tốc.
+- Tương quan giữa `Acc_LV` và đạo hàm vận tốc chỉ khoảng 0.0454, nên bài dùng `a_lead` tính bằng đạo hàm của `Speed_LV` đã làm mượt.
+- Đã loại 383 quỹ đạo trùng, còn 9.610 quỹ đạo từ 9.993 quỹ đạo ban đầu.
+- Loại trùng trước rồi chia theo quỹ đạo giúp tránh cùng một hành trình, hoặc các cửa sổ chồng lấn của nó, xuất hiện ở cả train và test, làm kết quả tốt giả tạo.
 
 ## Câu 2 · Phát lại
 Bản refactor float32 khác bit ở bao nhiêu đoạn, vượt dung sai ở bao nhiêu? Thay đổi AEB làm lệch bao nhiêu đoạn, và vì sao lệch ở đúng những khung đó (mở một đoạn ra xem)? Phát theo thời gian thật làm lộ ra điều gì mà phát nhanh nhất che đi?
 
-(trả lời ở đây)
+- Refactor float32 khác bit ở 600/600 đoạn nhưng không đoạn nào vượt dung sai; sai lệch lớn nhất chỉ khoảng 9.32e-5 m/s².
+- AEB làm 9 đoạn khác chính xác, trong đó 8 đoạn vượt dung sai: 46, 64, 164, 226, 252, 300, 512 và 534.
+- Kiểm tra đoạn 46, bước 98: TTC khoảng 1.474 s, dưới ngưỡng 1.5 s, nên AEB đổi lệnh từ khoảng -5.436 xuống -6 m/s². Lệnh chỉ thay đổi khi xe đang tiến gần, TTC dưới ngưỡng và lệnh cũ chưa phanh mạnh bằng -6 m/s².
+- Replay thời gian thật có 584 khung trễ, 575 khung bị bỏ trên 59.849 khung, làm 374/600 đoạn vượt dung sai vì phải giữ lệnh trước. Chạy nhanh nhất không xét deadline nên báo 0 trễ, 0 bỏ, che khuất ảnh hưởng của xử lý chậm.
 
 ## Câu 3 · Kịch bản
 Lưới của bạn (tốc độ cruise, giới hạn khoảng cách, số ô): bao nhiêu % ô **không ai tránh được**? Độ trễ phản ứng 0 → 0,6 s làm vùng đâm của IDM tăng bao nhiêu? Log có phủ vùng khó không? (dẫn giới hạn phanh mạnh nhất của người lái trong log, và phần lưới đòi hỏi hơn thế)
