@@ -7,8 +7,8 @@
 | Họ và tên | `Bùi Việt Anh` |
 | MSSV (đúng bằng `--student-id` bạn đã chạy) | `202602611` |
 | GitHub | `VietAnh-AI2-UET` |
-| Seed chia dữ liệu / seed mô hình (xem `evidence/closedloop.json`, mục `student`) | `<điền>` |
-| Số seed huấn luyện bạn dùng (`--seeds`) | `<điền>` |
+| Seed chia dữ liệu / seed mô hình (xem `evidence/closedloop.json`, mục `student`) | `4450 / 5796, 5797, 5798, 5799, 5800` |
+| Số seed huấn luyện bạn dùng (`--seeds`) | `5` |
 
 ## Kết quả cuối
 
@@ -16,11 +16,11 @@
 
 | Bộ điều khiển | L2 vòng hở (m) | Va chạm vòng kín trên log (%) | Quyết định cổng |
 |---|---|---|---|
-| constant-velocity | | | |
-| IDM | | | (baseline) |
-| EgoMLP | | | |
-| PercMLP | | | |
-| PercMLP+ (sau khi sửa) | | | |
+| constant-velocity | 1.255 | 20.985 | BLOCK |
+| IDM | 1.542 | 0.104 | (baseline) |
+| EgoMLP | 0.755–0.766 | 15.470–30.108 | BLOCK |
+| PercMLP | 0.612–0.622 | 0.382–2.844 | BLOCK |
+| PercMLP+ (sau khi sửa) | 0.820 ± 0.017 (mean ± std; evidence không lưu min–max) | 0.243–0.277 | RELEASE |
 
 ## Câu 1 · Dữ liệu
 Bước 0 bạn phát hiện những vấn đề gì ở dữ liệu? Vì sao không dùng cột `Acc_LV`, và bạn thay bằng gì? Bao nhiêu quỹ đạo bị loại vì trùng, và vì sao chia theo quỹ đạo?
